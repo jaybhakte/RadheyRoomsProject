@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Login</title>
+    <!-- Bootstrap CSS & icon file-->
+    {{>iconImage}}
+</head>
+
+<body>
+    <div class="container">
+        {{>navbar}}
+
+        <div class="row my-3">
+                <img class="img img-fluid" src="/img/signup.png" alt="loginImage" style="height: 200px;width:auto;">
+            <div class="col-1">
+            </div>
+            <div class="col-9">
+                <form action="/signup" method="POST">
+                <div class=" form-control form-group my-3">
+                        <label for="inputSName">Owner Name</label>
+                        <input type="text" class="form-control" id="inputSName" name="inputName" placeholder="Enter email" required>
+                    </div>
+                    <div class=" form-control form-group my-3">
+                        <label for="inputSEmail">Email address</label>
+                        <input type="email" class="form-control" id="inputSEmail" name="inputEmail" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-groupmy-3 ">
+                        <label for="inputSpassword">Password</label>
+                        <input type="password" class="form-control" id="inputSpassword" name="password" placeholder="Password" required>
+                    </div>
+                     <div class="form-group my-3 ">
+                        <label for="inputScpassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="inputScpassword" name="cpassword" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" id="signupBtn" class="btn btn-primary my-3 " >SignUp</button>
+                </form>
+            </div>
+        </div>
+
+
+
+{{>footer}}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+         <script  src ="/js/index.js"></script>
+</body>
+
+</html>

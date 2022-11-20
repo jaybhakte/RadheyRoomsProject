@@ -18,10 +18,10 @@
   <div class="container">
     {{>navbar}}
     <div class="row g-3 my-3">
-      <div class="col">
-        <img class="img img-fluid" src="/img/update.png" alt="">
+        <img class="img img-fluid" src="/img/update.png" alt="updateImage" style="height: 200px;width:auto">
+      <div class="col-2">
       </div>
-      <div class="col">
+      <div class="col-8">
         <form class="row g-3 was-validated" action="/update/{{Roomy._id}}" method="POST">
           <div class="col-md-6">
             <label for="inputName" class="form-label">Name </label>

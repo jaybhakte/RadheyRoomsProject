@@ -22,7 +22,7 @@ const multer = require('multer');
 var fs = require('fs')
 const ImageModel = require('./models/images');
 const VacancyModel = require('./models/vacancy')
-
+const OwnerModel = require('./models/owenerData')
 
 
 const static_path = path.join(__dirname, '/public');
@@ -88,6 +88,44 @@ app.get('/login', (req, res) => {
 //         res.status(400).send(e);
 //     }
 // })
+
+app.get('/signup',(req,res)=>{
+    res.render('signup')
+})
+
+app.post('/signup',async (req,res)=>{
+    try {
+
+        const password = req.body.password;
+        const cpassword = req.body.cpassword;
+        if(password==cpassword){
+            
+            const ownerDetails = new OwnerModel({
+                name:req.body.inputName,
+                email:req.body.inputEmail,
+                password:req.body.password,
+                cpassword:req.body.cpassword
+            })
+           //jaise hi user register hua hum(server) use token generate karke denge
+           const token = await ownerDetails.generateAuthToken();
+            console.log(token)
+           // cookies me token store karenge
+           res.cookie('jwt', token, {
+               expires: new Date(Date.now + 30000),
+               httpOnly: true
+           });
+           const ownerDetail =  await ownerDetails.save();
+           console.log(ownerDetail)
+            res.status(201).render("banner");
+            
+        }else{
+            res.status(400).render("404");
+        }
+
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 app.get('/register', (req, res) => {
     // res.send("Hello from the other side");
@@ -156,10 +194,10 @@ app.post('/login', async (req, res) => {
         const email = req.body.loginEmail;
         const password = req.body.loginPassword;
 
-        const roomyObject = await Roomy.findOne({ email: email }); //login form me diye gaye email se hum db ka pura object get karre
+        const ownerObject = await OwnerModel.findOne({ email: email }); //login form me diye gaye email se hum db ka pura object get karre
         // console.log(roomyObject);
-        const isMatch = await bcrypt.compare(password, roomyObject.password); //comparing form password and db password(hash vala) using bcryptjs 
-        const token = await roomyObject.generateAuthToken();
+        const isMatch = await bcrypt.compare(password, ownerObject.password); //comparing form password and db password(hash vala) using bcryptjs 
+        const token = await ownerObject.generateAuthToken();
 
         //cookies to store token while login
         res.cookie('jwt', token, {
@@ -171,7 +209,7 @@ app.post('/login', async (req, res) => {
 
         if (isMatch) { //login form ka password and db me ka password match kiya
             console.log("Login successfully");
-            res.status(201).render("services");
+            res.status(201).render("banner");
             //    console.log(roomyObject);
         } else {
             //    res.send("Oops! Something went wrong..")
@@ -183,13 +221,6 @@ app.post('/login', async (req, res) => {
         res.render('404');
     }
 })
-// app.get('/dashboard',(req,res)=>{
-//     try {
-//         res.render('list');
-//     } catch (e) {
-//         res.render('404');
-//     }
-// })
 
 app.get('/list', (req, res) => {
 
@@ -289,27 +320,6 @@ app.post('/update/:id', (req, res, next) => {
 })
 
 
-// app.get('/students', async (req,res)=>{
-//     try {
-//         const getStudents = await Roomy.find();
-//         res.send(getStudents);
-//         res.render('students');
-//     } catch (e) {
-//         res.send(e);
-//     }
-// })
-
-// app.get('/students/:id',async (req,res)=>{
-//     try{
-//         const _id = req.params.id;
-//         console.log(_id);
-//         const getStudent = await Roomy.findById(_id);
-//         res.send(getStudent);
-
-//     }catch(e){
-//         res.send(e)
-//     }
-// })
 
 
 /*

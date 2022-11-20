@@ -111,13 +111,13 @@
 }
 
 .bg-vegetable {
-    background: linear-gradient(rgba(52, 173, 84, .2), rgba(52, 173, 84, .2)), url(../img/vegetable.png) bottom right no-repeat;
-    background-size: contain;
+    background: linear-gradient( rgba(207, 241, 244, 0.2),rgba(241, 206, 7, 0.869)), url(../img/img1.jpg) bottom right no-repeat;
+    background-size: cover;
 }
 
 .bg-fruit {
-    background: linear-gradient(rgba(255, 153, 51, .2), rgba(255, 153, 51, .2)), url(../img/fruit.png) bottom right no-repeat;
-    background-size: contain;
+    background: linear-gradient( rgba(207, 241, 244, 0.2),rgba(10, 227, 176, 0.714)), url(../img/img2.jpg) bottom right no-repeat;
+    background-size: cover;
 }
 
 .service-item {
@@ -183,7 +183,7 @@
     height: 55%;
     bottom: 0;
     left: 0;
-    background: url(../img/bg-product-1.png) left bottom no-repeat, url(../img/bg-product-2.png) right bottom no-repeat;
+    background: url(../img/cor3.jpg) left bottom no-repeat, url(../img/cor3.jpg) right bottom no-repeat;
     background-size: contain;
     background-color: var(--primary);
     z-index: -1;
