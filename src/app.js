@@ -94,10 +94,12 @@ app.get('/signup',(req,res)=>{
 })
 
 app.post('/signup',async (req,res)=>{
+
     try {
 
         const password = req.body.password;
         const cpassword = req.body.cpassword;
+        console.log(password,cpassword)
         if(password==cpassword){
             
             const ownerDetails = new OwnerModel({
@@ -108,14 +110,14 @@ app.post('/signup',async (req,res)=>{
             })
            //jaise hi user register hua hum(server) use token generate karke denge
            const token = await ownerDetails.generateAuthToken();
-            console.log(token)
+          
            // cookies me token store karenge
            res.cookie('jwt', token, {
                expires: new Date(Date.now + 30000),
                httpOnly: true
            });
            const ownerDetail =  await ownerDetails.save();
-           console.log(ownerDetail)
+           
             res.status(201).render("banner");
             
         }else{
@@ -165,7 +167,7 @@ app.post('/register', async (req, res) => {
             })
             //jaise hi user register hua hum(server) use token generate karke denge
             const token = await registerRoomy.generateAuthToken();
-
+            console.log(registerRoomy)
             // cookies me token store karenge
             res.cookie('jwt', token, {
                 expires: new Date(Date.now + 30000),
