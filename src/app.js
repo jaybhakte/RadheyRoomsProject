@@ -7,6 +7,7 @@ require('./db/cons');
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const auth = require('./middleware/auth');
+const authowner = require('./middleware/authowner')
 const cookieParser = require('cookie-parser');
 const Roomy = require('./models/roomysData');
 const { Resolver } = require('dns');
@@ -93,7 +94,7 @@ app.get('/signup',(req,res)=>{
     res.render('signup')
 })
 
-app.post('/signup',async (req,res)=>{
+app.post('/signup',authowner, async (req,res)=>{
 
     try {
 
@@ -134,7 +135,7 @@ app.get('/register', (req, res) => {
     res.render('register');
 })
 
-app.post('/register', async (req, res) => {
+app.post('/register', auth, async (req, res) => {
     try {
         const password = req.body.password;
         const cpassword = req.body.cpassword;
