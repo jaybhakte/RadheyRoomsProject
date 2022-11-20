@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const roomysSchema = new mongoose.Schema({
 
     name: {
@@ -85,7 +86,7 @@ roomysSchema.methods.generateAuthToken = async function(){
         this.tokens = this.tokens.concat({token:token}); //humne gnerate kiya hua token us tokens arry of object ke token object me set karee
         //add token into db
         await this.save(); 
-        console.log(token);
+        // console.log(token);
         return token;
     } catch (e) {
         res.send(e);
@@ -110,3 +111,4 @@ roomysSchema.pre("save", async function (next) {
 
 const Roomys = new mongoose.model("Roomy", roomysSchema);
 module.exports = Roomys;
+

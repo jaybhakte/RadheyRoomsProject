@@ -168,20 +168,18 @@ app.post('/register', async (req, res) => {
             })
             //jaise hi user register hua hum(server) use token generate karke denge
             const token = await registerRoomy.generateAuthToken();
-            console.log(registerRoomy)
+    
             // cookies me token store karenge
             res.cookie('jwt', token, {
                 expires: new Date(Date.now + 30000),
                 httpOnly: false
             });
-            console.log(cookie);
-
-            const registeredRoomy = await registerRoomy.save();//registration details stored in db
-            res.status(201).render("payment"); //serveing index page after registration
+            
+            const registeredRoomy = await registerRoomy.save();
+            res.status(201).render("payment")
+            
         } else {
-
-            // res.send("Password Dosen't Match...");
-            res.render('404');
+            res.status(400).render("404");
         }
 
     } catch (e) {
