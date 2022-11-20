@@ -101,7 +101,7 @@ app.post('/signup', async (req,res)=>{
         const password = req.body.password;
         const cpassword = req.body.cpassword;
         console.log(password,cpassword)
-        if(password==cpassword){
+        if(password===cpassword){
             
             const ownerDetails = new OwnerModel({
                 name:req.body.inputName,
@@ -135,7 +135,7 @@ app.get('/register', (req, res) => {
     res.render('register');
 })
 
-app.post('/register', auth, async (req, res) => {
+app.post('/register', async (req, res) => {
     try {
         const password = req.body.password;
         const cpassword = req.body.cpassword;
