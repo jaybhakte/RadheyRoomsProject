@@ -37,9 +37,9 @@ OwnerSchema.methods.generateAuthToken = async function(){
 //hasing midlware
 OwnerSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
-        // console.log(`The current password is ${this.password}`);
+        console.log(`The current password is ${this.password}`);
         this.password = await bcrypt.hash(this.password, 10);
-        // console.log(`The current password is ${this.password}`);
+        console.log(`The current password is ${this.password}`);
         
         // this.cpassword = undefined; //pasword hash hone ke bad iski jarurat nahi 
         this.cpassword = await bcrypt.hash(this.password, 10); //pasword hash hone ke bad iski jarurat nahi 

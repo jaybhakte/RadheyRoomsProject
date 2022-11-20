@@ -115,7 +115,7 @@ app.post('/signup',authowner, async (req,res)=>{
            // cookies me token store karenge
            res.cookie('jwt', token, {
                expires: new Date(Date.now + 30000),
-               httpOnly: true
+               httpOnly: false
            });
            const ownerDetail =  await ownerDetails.save();
            
