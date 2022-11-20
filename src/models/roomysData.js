@@ -85,11 +85,11 @@ roomysSchema.methods.generateAuthToken = async function(){
         this.tokens = this.tokens.concat({token:token}); //humne gnerate kiya hua token us tokens arry of object ke token object me set karee
         //add token into db
         await this.save(); 
-        // console.log(token);
+        console.log(token);
         return token;
     } catch (e) {
         res.send(e);
-        console.log("error",e);
+        console.log("the error",e);
     }
 }
 
