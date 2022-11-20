@@ -172,9 +172,9 @@ app.post('/register', auth, async (req, res) => {
             // cookies me token store karenge
             res.cookie('jwt', token, {
                 expires: new Date(Date.now + 30000),
-                httpOnly: true
+                httpOnly: false
             });
-            // console.log(cookie);
+            console.log(cookie);
 
             const registeredRoomy = await registerRoomy.save();//registration details stored in db
             res.status(201).render("payment"); //serveing index page after registration
@@ -205,7 +205,7 @@ app.post('/login', async (req, res) => {
         //cookies to store token while login
         res.cookie('jwt', token, {
             expires: new Date(Date.now + 6000),
-            // httpOnly:true
+            httpOnly:false
         })
 
         // console.log("Generated token: " + token)

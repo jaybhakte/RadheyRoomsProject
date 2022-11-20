@@ -15,6 +15,7 @@ const auth = async (req,res,next)=>{
         req.user = user;
         next();
     } catch (e) {
+        console.log("Error",e,18)
         res.status(401).send(e);
     }
 
