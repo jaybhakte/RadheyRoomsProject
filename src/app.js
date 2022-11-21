@@ -176,7 +176,7 @@ app.post('/register', async (req, res) => {
             });
             
             const registeredRoomy = await registerRoomy.save();
-            res.status(201).render("payment")
+            res.status(201).redirect("payment")
             
         } else {
             res.status(400).render("404");
