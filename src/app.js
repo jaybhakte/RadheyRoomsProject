@@ -25,6 +25,9 @@ const ImageModel = require('./models/images');
 const VacancyModel = require('./models/vacancy')
 const OwnerModel = require('./models/owenerData')
 
+// const session = require('express-session');
+// const flash = require('connect-flash');
+
 
 const static_path = path.join(__dirname, '/public');
 const tamplates_path = path.join(__dirname, '../tamplates/views');
@@ -55,6 +58,17 @@ app.use(bodyparser.urlencoded({
 }));
 
 app.use(bodyparser.json());
+
+// app.use(session({
+//     secret:'weblesson',
+//     cookie:{maxAge:60000},
+//     saveUninitialized:false,
+//     resave:false
+// }));
+
+// app.use(flash({
+
+// }))
 
 app.get('/', (req, res) => {
     // res.send("Hello from the other side");
@@ -176,6 +190,7 @@ app.post('/register', async (req, res) => {
             });
             
             const registeredRoomy = await registerRoomy.save();
+            // req.flash('success',"Registered Succesfully")
             res.status(201).redirect("payment")
             
         } else {
