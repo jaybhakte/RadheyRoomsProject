@@ -176,7 +176,7 @@ app.post('/register', async (req, res) => {
             });
             
             const registeredRoomy = await registerRoomy.save();
-            res.status(201).redirect("payment")
+            res.status(201).render("payment")
             
         } else {
             res.status(400).render("404");
@@ -188,6 +188,9 @@ app.post('/register', async (req, res) => {
 })
 
 
+app.get('/banner',(req,res)=>{
+    res.render("banner")
+})
 app.post('/login', async (req, res) => {
     try {
 
