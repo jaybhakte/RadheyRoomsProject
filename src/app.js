@@ -69,26 +69,26 @@ app.get('/login', (req, res) => {
     // res.send("Hello from the other side");
     res.render('login');
 })
-// app.get('/logout', auth, async (req, res) => {
-//     try {
-//         console.log(req.user)
-//         // for single logout
-//         // req.user.tokens = req.user.tokens.filter((currentElem) => {
-//         //     return currentElem.token != req.token; //db me se perticular logined user ka token delete kar ke baki ke vaise hi rakhega
-//         // })
+app.get('/signout', authowner, async (req, res) => {
+    try {
+        console.log(req.user)
+        // for single logout
+        req.user.tokens = req.user.tokens.filter((currentElem) => {
+            return currentElem.token != req.token; //db me se perticular logined user ka token delete kar ke baki ke vaise hi rakhega
+        })
 
-//         //for complete logout
-//         req.user.tokens = [];
+        //for complete logout
+        // req.user.tokens = [];
 
-//         res.clearCookie('jwt');
-//         console.log("Logout successfully.");
-//         await req.user.save();
-//         res.render('login');
+        res.clearCookie('jwt');
+        console.log("Logout successfully.");
+        await req.user.save();
+        res.redirect('login');
 
-//     } catch (e) {
-//         res.status(400).send(e);
-//     }
-// })
+    } catch (e) {
+        res.status(400).send(e);
+    }
+})
 
 app.get('/signup',(req,res)=>{
     res.render('signup')
@@ -119,7 +119,7 @@ app.post('/signup', async (req,res)=>{
            });
            const ownerDetail =  await ownerDetails.save();
            
-            res.status(201).render("banner");
+            res.status(201).redirect("banner");
             
         }else{
             res.status(400).render("404");
@@ -130,7 +130,7 @@ app.post('/signup', async (req,res)=>{
     }
 })
 
-app.get('/register', (req, res) => {
+app.get('/register',(req, res) => {
     // res.send("Hello from the other side");
     res.render('register');
 })
@@ -176,7 +176,7 @@ app.post('/register', async (req, res) => {
             });
             
             const registeredRoomy = await registerRoomy.save();
-            res.status(201).render("payment")
+            res.status(201).redirect("payment")
             
         } else {
             res.status(400).render("404");
@@ -210,7 +210,7 @@ app.post('/login', async (req, res) => {
 
         if (isMatch) { //login form ka password and db me ka password match kiya
             console.log("Login successfully");
-            res.status(201).render("banner");
+            res.status(201).redirect("banner");
             //    console.log(roomyObject);
         } else {
             //    res.send("Oops! Something went wrong..")

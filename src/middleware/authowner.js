@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const Owner = require('../models/owenerData');
 const cookieParser = require('cookie-parser');
 
-const auth = async (req,res,next)=>{
+const authowner = async (req,res,next)=>{
     try {
         const token = req.cookies.jwt; //geting cookies 
         const verifyUser = jwt.verify(token,process.env.SECRET_KEY); //verify same user using secret key
@@ -21,4 +21,4 @@ const auth = async (req,res,next)=>{
 
 }
 
-module.exports = auth;
+module.exports = authowner;
