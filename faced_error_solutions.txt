@@ -25,3 +25,8 @@ Go to Control Panel and click on Administrative Tools.
 Double click on Services. A new window opens up.
 Search MongoDB.exe. Right click on it and select Start.
 The server will start. Now execute npm start again and the code might work this time
+
+#error
+while setting token as cookie in  name jwt we get expire is not valid error so simply remove expire code.
+res.cookie('jwt',token); simple
+cookie not need expires it is optional

@@ -22,15 +22,15 @@ OwnerSchema.methods.generateAuthToken = async function(){
         //generate token 
         console.log(this._id,19);
         const token = jwt.sign({_id:this._id}, process.env.SECRET_KEY);
-        // console.log(token)
+        console.log("Token ji...",token,25)
         this.tokens = this.tokens.concat({token:token}); //humne gnerate kiya hua token us tokens arry of object ke token object me set karee
         //add token into db
         await this.save(); 
-        // console.log(token);
+        console.log(token);
         return token;
     } catch (e) {
         res.send(e);
-        console.log("error",e);
+        console.log("Ye dekh eroor bhai: ",e,33);
     }
 }
 

@@ -25,14 +25,11 @@ const ImageModel = require('./models/images');
 const VacancyModel = require('./models/vacancy')
 const OwnerModel = require('./models/owenerData')
 
-// const session = require('express-session');
-// const flash = require('connect-flash');
-
 
 const static_path = path.join(__dirname, '/public');
 const tamplates_path = path.join(__dirname, '../tamplates/views');
 const partials_path = path.join(__dirname, '../tamplates/partials');
-console.log(static_path)
+// console.log(static_path)
 // console.log(process.env.SECRET_KEY)
 //use midlware for display front end
 app.use(express.static(static_path));
@@ -59,16 +56,6 @@ app.use(bodyparser.urlencoded({
 
 app.use(bodyparser.json());
 
-// app.use(session({
-//     secret:'weblesson',
-//     cookie:{maxAge:60000},
-//     saveUninitialized:false,
-//     resave:false
-// }));
-
-// app.use(flash({
-
-// }))
 
 app.get('/', (req, res) => {
     // res.send("Hello from the other side");
@@ -83,40 +70,25 @@ app.get('/login', (req, res) => {
     // res.send("Hello from the other side");
     res.render('login');
 })
-app.get('/signout', authowner, async (req, res) => {
-    try {
-        console.log(req.user)
-        // for single logout
-        req.user.tokens = req.user.tokens.filter((currentElem) => {
-            return currentElem.token != req.token; //db me se perticular logined user ka token delete kar ke baki ke vaise hi rakhega
-        })
 
-        //for complete logout
-        // req.user.tokens = [];
 
-        res.clearCookie('jwt');
-        console.log("Logout successfully.");
-        await req.user.save();
-        res.redirect('login');
-
-    } catch (e) {
-        res.status(400).send(e);
-    }
+app.get('/banner',(req,res)=>{
+    res.render("banner")
 })
 
 app.get('/signup',(req,res)=>{
+    console.log("Signup page mila...",108)
     res.render('signup')
 })
 
 app.post('/signup', async (req,res)=>{
 
     try {
-
         const password = req.body.password;
         const cpassword = req.body.cpassword;
         console.log(password,cpassword)
-        if(password===cpassword){
-            
+        if(password === cpassword){
+            console.log("Enter into If...",119)
             const ownerDetails = new OwnerModel({
                 name:req.body.inputName,
                 email:req.body.inputEmail,
@@ -125,21 +97,21 @@ app.post('/signup', async (req,res)=>{
             })
            //jaise hi user register hua hum(server) use token generate karke denge
            const token = await ownerDetails.generateAuthToken();
-          
+          console.log("Ye le bhai token...",token,128)
            // cookies me token store karenge
-           res.cookie('jwt', token, {
-               expires: new Date(Date.now + 30000),
-               httpOnly: false
-           });
-           const ownerDetail =  await ownerDetails.save();
            
-            res.status(201).redirect("banner");
+           res.cookie('jwt', token);
+
+           const ownerDetail =  await ownerDetails.save();
+           console.log("Ye lo owner..",ownerDetail,135)
+            res.status(200).render("banner");
             
         }else{
             res.status(400).render("404");
         }
 
     } catch (e) {
+        console.log("Catch ka error... ",e)
         res.status(400).send(e)
     }
 })
@@ -184,14 +156,11 @@ app.post('/register', async (req, res) => {
             const token = await registerRoomy.generateAuthToken();
     
             // cookies me token store karenge
-            res.cookie('jwt', token, {
-                expires: new Date(Date.now + 30000),
-                httpOnly: false
-            });
+            res.cookie('jwt', token);
             
             const registeredRoomy = await registerRoomy.save();
             // req.flash('success',"Registered Succesfully")
-            res.status(201).redirect("payment")
+            res.status(201).render("payment")
             
         } else {
             res.status(400).render("404");
@@ -203,10 +172,7 @@ app.post('/register', async (req, res) => {
 })
 
 
-app.get('/banner',(req,res)=>{
-    res.render("banner")
-})
-app.post('/login', async (req, res) => {
+app.post('/login', async(req, res) => {
     try {
 
         //login form me diya gaya email and password hai niche ka
@@ -219,16 +185,13 @@ app.post('/login', async (req, res) => {
         const token = await ownerObject.generateAuthToken();
 
         //cookies to store token while login
-        res.cookie('jwt', token, {
-            expires: new Date(Date.now + 6000),
-            httpOnly:false
-        })
+        res.cookie('jwt', token)
 
         // console.log("Generated token: " + token)
 
         if (isMatch) { //login form ka password and db me ka password match kiya
             console.log("Login successfully");
-            res.status(201).redirect("banner");
+            res.status(201).render("banner");
             //    console.log(roomyObject);
         } else {
             //    res.send("Oops! Something went wrong..")
@@ -555,7 +518,26 @@ app.post('/updatevimage/:id', vacancy, async (req, res, next) => {
 
 })
 
+app.get('/signout', authowner, async (req, res) => {
+    try {
+        console.log(req.user)
+        // for single logout
+        req.user.tokens = req.user.tokens.filter((currentElem) => {
+            return currentElem.token != req.token; //db me se perticular logined user ka token delete kar ke baki ke vaise hi rakhega
+        })
 
+        //for complete logout
+        // req.user.tokens = [];
+
+        res.clearCookie('jwt');
+        console.log("Logout successfully.");
+        await req.user.save();
+        res.redirect('login');
+
+    } catch (e) {
+        res.status(400).send(e);
+    }
+})
 
 
 
