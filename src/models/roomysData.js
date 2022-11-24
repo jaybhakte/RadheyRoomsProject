@@ -30,14 +30,14 @@ const roomysSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true,
-    },
-    cpassword: {
-        type: String,
-        required: true,
-    },
+    // password: {
+    //     type: String,
+    //     required: true,
+    // },
+    // cpassword: {
+    //     type: String,
+    //     required: true,
+    // },
     gender: {
         type: String,
         required: true,
@@ -69,45 +69,45 @@ const roomysSchema = new mongoose.Schema({
         required: true,
         maxlength: 6
     },
-    tokens:[{
-        token:{
-            type:String,
-            required:true
-        },
-    }]
+    // tokens:[{
+    //     token:{
+    //         type:String,
+    //         required:true
+    //     },
+    // }]
 })
 
 //generating token
-roomysSchema.methods.generateAuthToken = async function(){
-    try {
-        //generate token 
-        console.log(this._id);
-        const token = jwt.sign({_id:this._id}, process.env.SECRET_KEY);
-        this.tokens = this.tokens.concat({token:token}); //humne gnerate kiya hua token us tokens arry of object ke token object me set karee
-        //add token into db
-        await this.save(); 
-        // console.log(token);
-        return token;
-    } catch (e) {
-        res.send(e);
-        console.log("the error",e);
-    }
-}
+// roomysSchema.methods.generateAuthToken = async function(){
+//     try {
+//         //generate token 
+//         console.log(this._id);
+//         const token = jwt.sign({_id:this._id}, process.env.SECRET_KEY);
+//         this.tokens = this.tokens.concat({token:token}); //humne gnerate kiya hua token us tokens arry of object ke token object me set karee
+//         //add token into db
+//         await this.save(); 
+//         // console.log(token);
+//         return token;
+//     } catch (e) {
+//         res.send(e);
+//         console.log("the error",e);
+//     }
+// }
 
 //making midlware : register form data get karne ke bad and db me save karne se pahale
 //hasing midlware
-roomysSchema.pre("save", async function (next) {
-    if (this.isModified("password")) {
-        // console.log(`The current password is ${this.password}`);
-        this.password = await bcrypt.hash(this.password, 10);
-        // console.log(`The current password is ${this.password}`);
+// roomysSchema.pre("save", async function (next) {
+//     if (this.isModified("password")) {
+//         // console.log(`The current password is ${this.password}`);
+//         this.password = await bcrypt.hash(this.password, 10);
+//         // console.log(`The current password is ${this.password}`);
         
-        // this.cpassword = undefined; //pasword hash hone ke bad iski jarurat nahi 
-        this.cpassword = await bcrypt.hash(this.password, 10); //pasword hash hone ke bad iski jarurat nahi 
+//         // this.cpassword = undefined; //pasword hash hone ke bad iski jarurat nahi 
+//         this.cpassword = await bcrypt.hash(this.password, 10); //pasword hash hone ke bad iski jarurat nahi 
 
-    }
-    next();
-})
+//     }
+//     next();
+// })
 
 const Roomys = new mongoose.model("Roomy", roomysSchema);
 module.exports = Roomys;

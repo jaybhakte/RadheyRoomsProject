@@ -123,8 +123,8 @@ app.get('/register',(req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        const password = req.body.password;
-        const cpassword = req.body.cpassword;
+        // const password = req.body.password;
+        // const cpassword = req.body.cpassword;
         //html form date ko modify kiya
         const modifiedDate = new Date(req.body.registerDate);
         let dd = modifiedDate.getDate();
@@ -132,7 +132,7 @@ app.post('/register', async (req, res) => {
         let yyyy = modifiedDate.getFullYear();
         let registrationDate = new Date(dd + '-' + mm + '-' + yyyy);
 
-        if (password === cpassword) {
+        // if (password === cpassword) {
             //gettting html form data
             const registerRoomy = new Roomy({ //collection creation
                 // db key : input name attribute value`
@@ -141,8 +141,8 @@ app.post('/register', async (req, res) => {
                 phone: req.body.phone,
                 fatherPhone: req.body.fatherPhone,
                 email: req.body.email,
-                password: req.body.password,
-                cpassword: req.body.cpassword,
+                // password: req.body.password,
+                // cpassword: req.body.cpassword,
                 gender: req.body.gender,
                 registerDate: req.body.registerDate,
                 age: req.body.age,
@@ -153,19 +153,17 @@ app.post('/register', async (req, res) => {
 
             })
             //jaise hi user register hua hum(server) use token generate karke denge
-            const token = await registerRoomy.generateAuthToken();
+            // const token = await registerRoomy.generateAuthToken();
     
             // cookies me token store karenge
-            res.cookie('jwt', token);
+            // res.cookie('jwt', token);
             
             const registeredRoomy = await registerRoomy.save();
             // req.flash('success',"Registered Succesfully")
             res.status(201).render("payment")
-            
-        } else {
-            res.status(400).render("404");
-        }
-
+        // }else{
+        //     res.status(400).render("404")
+        // }
     } catch (e) {
         res.status(400).send(e)
     }
