@@ -6,7 +6,7 @@ const bodyparser = require('body-parser');
 require('./db/cons');
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
-const auth = require('./middleware/auth');
+
 const authowner = require('./middleware/authowner')
 const cookieParser = require('cookie-parser');
 const Roomy = require('./models/roomysData');

@@ -27,7 +27,7 @@
                         <th scope="col">Description</th>
                         <th scope="col">Images</th>
                         <th scope="col">Delete</th>
-                        <th scope="col">Back</th>
+                        {{!-- <th scope="col">Back</th> --}}
                     </tr>
                 </thead>
 
@@ -36,9 +36,9 @@
                     <tr>
                         <td scope="row">{{this.name}}</td>
                         <td scope="row">{{this.desc}}</td>
-                        <td scope="row"><img class="img img-fluid" src="/uploads/{{this.image.data}}" alt="" style="height: 100px;width:150px"></td>
+                        <td scope="row"><img class="img img-fluid" src="/uploads/{{this.image.data}}" alt="" style="width:auto;"></td>
                         <td><a class="btn btn-danger" href="/deleteimage/{{this._id}}">Delete</a></td> 
-                    <td><a class="btn btn-primary" href="/">Home</a></td> 
+                    {{!-- <td><a class="btn btn-primary" href="/">Home</a></td>  --}}
                     </tr>
                     {{/each}}
                 </tbody>
