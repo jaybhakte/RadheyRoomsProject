@@ -104,7 +104,7 @@ app.post('/signup', async (req,res)=>{
 
            const ownerDetail =  await ownerDetails.save();
            console.log("Ye lo owner..",ownerDetail,135)
-            res.status(200).render("banner");
+            res.status(200).render("banner",{msg:'Tenant register successfully do your payment by cash or online.'});
             
         }else{
             res.status(400).render("404");
@@ -160,7 +160,7 @@ app.post('/register', async (req, res) => {
             
             const registeredRoomy = await registerRoomy.save();
             // req.flash('success',"Registered Succesfully")
-            res.status(201).render("payment")
+            res.status(201).render("payment",{msg:"Registered successfully!!"})
         // }else{
         //     res.status(400).render("404")
         // }
@@ -207,7 +207,7 @@ app.get('/list', (req, res) => {
     Roomy.find((err, docs) => {
         if (!err) {
             res.render("list", {
-                list: docs
+                list: docs, msg:''
             });
         }
         else {
@@ -293,8 +293,8 @@ app.post('/update/:id', (req, res, next) => {
             console.log("Cant retrive data and edit because of some problem");
             next(err);
         } else {
-            console.log("UPdated Successfully");
-            res.redirect('/list');
+            // console.log("UPdated Successfully");
+            res.redirect("/list");
         }
     })
 })
@@ -402,7 +402,7 @@ app.get('/deleteimage/:id', (req, res, next) => {
 
 
 app.get('/payment', (req, res) => {
-    res.render('payment')
+    res.render('payment',{msg:''})
 })
 
 // vacancy functionality
